@@ -1,0 +1,15 @@
+{
+  "name": "boxybird/adventure",
+  "description": "A package for building a \"choose your own adventure\" style solution.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Andrew Rhyand"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "BoxyBird\\Adventure\\": "src/"
+    }
+  }
+}

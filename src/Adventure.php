@@ -2,6 +2,8 @@
 
 namespace BoxyBird\Adventure;
 
+use Exception;
+
 class Adventure
 {
     protected array $data = [];
@@ -49,6 +51,10 @@ class Adventure
 
     public function goToStep(string $key): array
     {
+        if (empty($this->steps[$key])) {
+            throw new Exception("Step Key not found: '{$key}'");
+        }
+
         $step = $this->steps[$key];
 
         $this->current_key = $key;
@@ -83,6 +89,10 @@ class Adventure
 
     public function invokeRenderStepCallback(string $key)
     {
+        if (empty($this->steps[$key])) {
+            throw new Exception("Step Key not found: '{$key}'");
+        }
+
         $step = $this->steps[$key];
 
         if (!empty($this->previous_step['key']) && $this->previous_step['key'] === $this->current_key) {
@@ -105,5 +115,12 @@ class Adventure
     public function addStep(string $key, callable $render_step_callback = null, callable $next_step_callback = null): void
     {
         $this->steps[$key] = (new AdventureStep($key, $render_step_callback, $next_step_callback))->toArray();
+    }
+
+    public function addSteps(array $steps): void
+    {
+        foreach ($steps as $key => $step) {
+            $this->addStep($key, $step['render_step_callback'], $step['next_step_callback']);
+        }
     }
 }

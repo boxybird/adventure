@@ -49,6 +49,11 @@ class Adventure
         ]);
     }
 
+    public function getStep(string $key): array
+    {
+        return $this->goToStep($key);
+    }
+
     public function goToStep(string $key): array
     {
         if (empty($this->steps[$key])) {
